@@ -4,7 +4,14 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { CreateDataRequest, UpdateDataRequest } from "../../schemas/StorageSchema";
 import { Plans } from "../../enums/PlanEnum";
 
-const client = new DynamoDBClient({ region: "sa-east-1" })
+const client = new DynamoDBClient({
+    credentials: process.env.AWS_ACCESS_KEY_ID ? {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "",
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? "",
+    } : undefined,
+    region: "sa-east-1" 
+})
+
 const docClient = DynamoDBDocumentClient.from(client);
 
 export async function createData(request: CreateDataRequest, reply: FastifyReply) {

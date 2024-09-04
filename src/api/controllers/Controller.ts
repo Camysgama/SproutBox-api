@@ -1,32 +1,27 @@
-import { FastifyInstance } from "fastify"
+import { FastifyInstance, FastifyRequest } from "fastify"
 import { createCheckout, getAllCredit } from "../services/CheckoutService"
 import { createData, updatePlan } from "../services/StorageService"
+import { $ref, CreateDataRequest, UpdateDataRequest } from "../../schemas/StorageSchema"
 
 export async function Controller(route: FastifyInstance) {
-    route.get('/credit', () => {
-        return getAllCredit()
-    })
-
-    // route.post<{Body: CreditRequest}>('/checkout',
-    // {
-    //     schema: {
-    //         body: $ref("creditRequest"),
-    //         response: {
-    //             201: $ref("creditRequest"),
-    //         }
-    //     }
-    // },
-    // (request) => {
-    //     return createCredit(request.body)
-    // })
-
     route.post('/checkout', {
     }, (request, reply) => {
         return createCheckout(request, reply)
     })
 
-    route.post('/create-data', {
+    route.post<{Body: CreateDataRequest}>('/create-data', {
+        schema: {
+            body: $ref("createDataRequest"),
+        }
     }, (request, reply) => {
-        return updatePlan(request, reply)
+        return createData(request.body, reply)
+    })
+
+    route.post<{Body: UpdateDataRequest}>('/update-plan', {
+        schema: {
+            body: $ref("updateDataRequest"),
+        }
+    }, (request, reply) => {
+        return updatePlan(request.body, reply)
     })
 }

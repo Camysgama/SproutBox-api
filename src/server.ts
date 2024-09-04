@@ -1,6 +1,6 @@
 import fastify from 'fastify';
 import { Controller } from './api/controllers/Controller';
-import { schemas } from './schemas/CreditSchema';
+import { schemas } from './schemas/StorageSchema';
 import fastifyCors from '@fastify/cors';
 
 

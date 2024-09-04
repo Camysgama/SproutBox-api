@@ -1,15 +1,10 @@
-import { Credit } from "../api/models/DTOs/Credit";
+import { SproutboxData } from "../api/models/DTOs/SproutboxData";
 
 export class Database {
-    private data: Credit[] = [];
+    private data: SproutboxData[] = [];
 
     getData(){
         return this.data;
-    }
-
-    newItem(credit: Credit){
-        this.data.push(credit);
-        return credit;
     }
 }
 

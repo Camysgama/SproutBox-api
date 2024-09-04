@@ -1,10 +1,13 @@
 {
-  "name": "credit_payment",
+  "name": "sproutbox-api",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/app.ts",
-    "test": "tsx src/api/services/CreditService.ts"
+    "dev": "tsx watch src/server.ts",
+    "build": "tsup src"
+  },
+  "engines": {
+    "node": "22"
   },
   "keywords": [],
   "author": "",
@@ -19,12 +22,15 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.637.0",
     "@aws-sdk/lib-dynamodb": "^3.637.0",
+    "@fastify/aws-lambda": "^4.1.0",
     "@fastify/cors": "^9.0.1",
     "@fastify/formbody": "^7.4.0",
     "amazon-cognito-identity-js": "^6.3.12",
     "fastify": "^4.27.0",
     "fastify-zod": "^1.4.0",
+    "sproutbox-api": "file:",
     "stripe": "^16.9.0",
+    "tsup": "^8.2.4",
     "uuid": "^10.0.0",
     "zod": "^3.23.8"
   }

@@ -1,6 +1,6 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, GetCommand, PutCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyReply } from "fastify";
 import { CreateDataRequest, UpdateDataRequest } from "../../schemas/StorageSchema";
 import { Plans } from "../../enums/PlanEnum";
 
@@ -44,4 +44,16 @@ export async function updatePlan(request: UpdateDataRequest, reply: FastifyReply
     });
     const response = await docClient.send(command);
     return reply.send(response);
+}
+
+export async function getPlan(id: string, reply: FastifyReply) {
+    const command = new GetCommand({
+        TableName: "sproutbox-data",
+        Key: {
+            id
+        },
+        AttributesToGet: ["SproutPlan"]
+    })
+    const response = await docClient.send(command)
+    return reply.send(response.Item)
 }

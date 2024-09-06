@@ -1,12 +1,15 @@
-import { FastifyInstance, FastifyRequest } from "fastify"
-import { createCheckout, getAllCredit } from "../services/CheckoutService"
-import { createData, updatePlan } from "../services/StorageService"
-import { $ref, CreateDataRequest, UpdateDataRequest } from "../../schemas/StorageSchema"
+import { FastifyInstance } from "fastify"
+import { createCheckout } from "../services/CheckoutService"
+import { createData, getPlan, updatePlan } from "../services/StorageService"
+import { $ref, CreateCheckoutRequest, CreateDataRequest, UpdateDataRequest } from "../../schemas/StorageSchema"
 
 export async function Controller(route: FastifyInstance) {
-    route.post('/checkout', {
+    route.post<{Body: CreateCheckoutRequest}>('/checkout', {
+        schema: {
+            body: $ref("createCheckoutRequest")
+        }
     }, (request, reply) => {
-        return createCheckout(request, reply)
+        return createCheckout(request.body, reply)
     })
 
     route.post<{Body: CreateDataRequest}>('/create-data', {
@@ -23,5 +26,10 @@ export async function Controller(route: FastifyInstance) {
         }
     }, (request, reply) => {
         return updatePlan(request.body, reply)
+    })
+
+    route.get('/get-plan/:id', {}, (request, reply) => {
+        const params = request.params as { id: string};
+        return getPlan(params.id, reply);
     })
 }

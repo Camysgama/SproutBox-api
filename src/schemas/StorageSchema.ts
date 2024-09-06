@@ -16,10 +16,16 @@ const updateDataRequest = z.object({
     plan: z.nativeEnum(Plans)
 });
 
+const createCheckoutRequest = z.object({
+    plan: z.nativeEnum(Plans)
+})
+
 export type CreateDataRequest = z.infer<typeof createDataRequest>;
 export type UpdateDataRequest = z.infer<typeof updateDataRequest>;
+export type CreateCheckoutRequest = z.infer<typeof createCheckoutRequest>;
 
 export const { schemas, $ref } = buildJsonSchemas({
     createDataRequest,
-    updateDataRequest
+    updateDataRequest,
+    createCheckoutRequest
 })
